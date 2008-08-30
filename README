@@ -12,4 +12,4 @@ REQUIREMENTS
 - hpricot
 
 BUGS
-- Doesn't report result of first test result (!)
+- Doesn't report result of first test (!)
