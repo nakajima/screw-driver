@@ -15,7 +15,7 @@ REQUIREMENTS
 - sinatra
 - colored
 - hpricot
-- grr
+- grr (github.com/nakajima/grr)
 
 BUGS
 - Doesn't report result of first test (!)
