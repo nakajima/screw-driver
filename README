@@ -6,6 +6,11 @@ Still really early. To try it, run this:
 
   ruby lib/screw_driver.rb spec/fixtures/suite.html
 
+Screw.Driver will generate urls for each of the external
+scripts and CSS links you include in your suite.html file,
+and will serve them from the directory that contains the
+suite.html file.
+
 REQUIREMENTS
 - sinatra
 - colored
