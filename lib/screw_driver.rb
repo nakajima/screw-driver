@@ -1,7 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 
 require 'rubygems'
-require 'hpricot'
 require 'sinatra'
 require 'colored'
 require 'screw_driver/suite.rb'

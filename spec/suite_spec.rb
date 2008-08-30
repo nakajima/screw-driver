@@ -3,6 +3,7 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 describe Screw::Driver::Suite do
   before(:each) do
     @stub = stub('context')
+    @stub.stub!(:get)
     @suite = Screw::Driver::Suite.new(File.join(FIXTURE_PATH, 'suite.html'), @stub)
   end
   
