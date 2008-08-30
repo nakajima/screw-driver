@@ -1,3 +1,4 @@
+$(Screw).bind('before', function() { $.post('/before') });
 $(Screw).ready(function() {
   var results = [ ];
 
@@ -35,8 +36,7 @@ $(Screw).ready(function() {
     window.setTimeout(function() { $.post('/exit') }, 200);
   }
   
+  $(Screw).bind('after', function() { window.setTimeout(finish, 500); });
   $('.it').bind('passed', function(e) { results.push({ url: '/passed', passed: true }); });
   $('.it').bind('failed', function(e, reason) { results.push({ url: '/failed', info: reason, event: e }) });
-  $(Screw).bind('before', function() { $.post('/before') });
-  $(Screw).bind('after', function() { window.setTimeout(finish, 500); });
 });

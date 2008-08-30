@@ -9,11 +9,12 @@ require 'screw_driver/helpers.rb'
 configure do
   Rack::CommonLogger.class_eval { def <<(str) end } # Inhibit logging retardase
   SUITE = Screw::Driver::Suite.new(ARGV[0], self)
-  Thread.new { sleep 1; system "open -a Firefox 'http://localhost:4567/?body%20%3E%20.describe'" }
+  browser = ARGV[1] || 'Firefox'
+  Thread.new { sleep 1; system "open -a #{browser} 'http://localhost:4567/?body%20%3E%20.describe'" }
 end
 
-post('/passed') { report '.'.green }
-post('/failed') { report 'F'.red, params }
+post('/passed')  { report '.'.green }
+post('/failed')  { report 'F'.red, params }
 post('/errored') { report 'E'.magenta, params }
 
 SUITE.generate_js_urls
@@ -24,24 +25,22 @@ get '/' do
 end
 
 post '/before' do
-  puts
-  puts "Staring to run test suite..."
-  puts
-  :ok
+  padded do
+    puts "Staring to run test suite..."
+  end
 end
 
 post '/after' do
-  puts "\n\n"
-  SUITE.failures.each do |failure|
-    puts ""
-    puts "FAILURE".red
-    puts "- #{failure[:name]}: #{failure[:reason]}"
-    puts ""
+  padded do
+    SUITE.failures.each do |failure|
+      padded do
+        puts "FAILURE".red
+        puts "- #{failure[:name]}: #{failure[:reason]}"
+      end
+    end
+    print "Finished. #{SUITE.test_count} tests. "
+    print "#{SUITE.failures.length} failures." unless SUITE.failures.empty?
   end
-  print "Finished. #{SUITE.test_count} tests. "
-  print "#{SUITE.failures.length} failures." unless SUITE.failures.empty?
-  puts ""
-  :ok
 end
 
 post '/exit' do
