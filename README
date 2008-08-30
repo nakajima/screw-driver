@@ -1,0 +1,15 @@
+= Screw.Driver =
+
+Another way to run your Screw.Unit tests.
+
+Still really early. To try it, run this:
+
+  ruby lib/screw_driver.rb spec/fixtures/suite.html
+
+REQUIREMENTS
+- sinatra
+- colored
+- hpricot
+
+BUGS
+- Doesn't report result of first test result (!)
