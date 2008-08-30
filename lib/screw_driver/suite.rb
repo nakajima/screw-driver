@@ -6,12 +6,9 @@ module Screw
       
       def initialize(path, context)
         raise "No suite found: #{path}" unless File.exists?(path)
-        @path = path
-        @context = context
+        @path, @context = path, context
         @test_count = 0
         @failures = []
-        generate_js_urls
-        generate_css_urls
       end
       
       def passed!
