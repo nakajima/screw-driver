@@ -25,7 +25,7 @@ helpers do
     padded do
       SUITE.failures.each do |failure|
         padded do
-          puts "FAILURE".red
+          puts "Failure:".red
           puts "- #{failure[:name]}: #{failure[:reason]}"
         end
       end
