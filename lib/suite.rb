@@ -7,9 +7,7 @@ module Screw
       
       def initialize(context, args)
         @args, @context = args, context
-        @test_count = 0
-        @failures = []
-        parse_args
+        parse_args and reset!
       end
       
       def passed!
