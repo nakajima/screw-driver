@@ -6,6 +6,17 @@ Still really early. To try it, run this:
 
   ./bin/screwdriver spec/fixtures/suite.html
 
+You can specify a browser like so:
+
+  ./bin/screwdriver spec/fixtures/suite.html --browser Safari
+
+By default, Screw.Driver uses Firefox.
+
+If you don't want the server to automatically quit after
+your suite runs, you can use the "--server" option:
+
+  ./bin/screwdriver spec/fixtures/suite.html --server
+
 Screw.Driver will generate urls for each of the external
 scripts and CSS links you include in your suite.html file,
 and will serve them from the directory that contains the
