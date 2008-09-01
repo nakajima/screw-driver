@@ -12,7 +12,7 @@
     });
     
     $('.it').bind('failed', function(e, reason) {
-      if (reason.line) { // ERROR
+      if (reason.fileName || reason.lineNumber) { // ERROR
         return $.ajaxQueue.post('/errored', {
           data: { name: $(this).find('h2').text(), reason: reason }
         });
