@@ -8,8 +8,8 @@ ARGV.clear
 require 'rubygems'
 require 'colored'
 require 'sinatra'
-require 'screw_driver/suite.rb'
-require 'screw_driver/helpers.rb'
+require 'suite.rb'
+require 'helpers.rb'
 
 configure do
   Rack::CommonLogger.class_eval { def <<(str) end } # Inhibit logging retardase
