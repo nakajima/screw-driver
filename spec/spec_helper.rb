@@ -7,7 +7,7 @@ require File.join(File.dirname(__FILE__), '..', 'lib', 'screw_driver', 'suite.rb
 def create_suite(*additional_options)
   @stub = stub('context')
   @stub.stub!(:get)
-  @args = [File.join(FIXTURE_PATH, 'suite.html')]
+  @args = ['fixtures/suite.html']
   additional_options.each { |opt| @args << opt }
   Screw::Driver::Suite.new(@stub, @args)
 end

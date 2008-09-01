@@ -29,7 +29,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should find external script_urls" do
-    @suite.should have(13).script_urls
+    @suite.should have(14).script_urls
   end
   
   it "should find external link_urls" do
@@ -37,7 +37,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should generate GET urls for scripts" do
-    @stub.should_receive(:get).exactly(13).times
+    @stub.should_receive(:get).exactly(14).times
     @suite.generate_js_urls
   end
   

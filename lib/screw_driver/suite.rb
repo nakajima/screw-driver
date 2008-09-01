@@ -78,7 +78,6 @@ module Screw
         end
           
         @path = File.join(Dir.pwd, @args.shift)
-        puts @path
       end
       
       def doc
