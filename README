@@ -15,4 +15,3 @@ REQUIREMENTS
 - sinatra
 - colored
 - hpricot
-- grr (github.com/nakajima/grr)
