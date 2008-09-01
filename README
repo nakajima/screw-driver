@@ -4,7 +4,7 @@ Another way to run your Screw.Unit tests.
 
 Still really early. To try it, run this:
 
-  ruby ./bin/screwdriver spec/fixtures/suite.html
+  ./bin/screwdriver spec/fixtures/suite.html
 
 Screw.Driver will generate urls for each of the external
 scripts and CSS links you include in your suite.html file,
