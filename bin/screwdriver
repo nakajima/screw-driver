@@ -14,7 +14,7 @@ require 'helpers.rb'
 configure do
   Rack::CommonLogger.class_eval { def <<(str) end } # Inhibit logging retardase
   SUITE = Screw::Driver::Suite.new(self, args)
-  Thread.new { sleep 1; system "open -a #{SUITE.browser} 'http://localhost:4567/?body%20%3E%20.describe'" }
+  start_browser
 end
 
 SUITE.generate_js_urls
