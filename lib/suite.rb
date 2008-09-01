@@ -37,11 +37,11 @@ module Screw
       end
       
       def script_urls
-        @script_urls ||= doc.search('script').map { |script| script['src'] }.compact
+        doc.search('script').map { |script| script['src'] }.compact
       end
       
       def link_urls
-        @link_urls ||= doc.search('link').map { |script| script['href'] }.compact
+        doc.search('link').map { |script| script['href'] }.compact
       end
       
       def to_s
