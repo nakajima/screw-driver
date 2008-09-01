@@ -4,7 +4,7 @@ Another way to run your Screw.Unit tests.
 
 Still really early. To try it, run this:
 
-  ruby lib/screw_driver.rb spec/fixtures/suite.html
+  ruby ./bin/screwdriver spec/fixtures/suite.html
 
 Screw.Driver will generate urls for each of the external
 scripts and CSS links you include in your suite.html file,
@@ -16,6 +16,3 @@ REQUIREMENTS
 - colored
 - hpricot
 - grr (github.com/nakajima/grr)
-
-BUGS
-- Doesn't report result of first test (!)

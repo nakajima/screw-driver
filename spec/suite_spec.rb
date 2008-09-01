@@ -2,9 +2,26 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Screw::Driver::Suite do
   before(:each) do
-    @stub = stub('context')
-    @stub.stub!(:get)
-    @suite = Screw::Driver::Suite.new(File.join(FIXTURE_PATH, 'suite.html'), @stub)
+    @suite = create_suite
+  end
+  
+  describe "parse_args" do
+    it "should get path" do
+      @suite.path.should == File.join(FIXTURE_PATH, 'suite.html')
+    end
+
+    it "should have server mode" do
+      @suite.should_not be_server
+      create_suite('--server').should be_server
+    end
+    
+    it "should get browser" do
+      create_suite('--browser', 'Safari').browser.should == 'Safari'
+    end
+    
+    it "should default browser to Firefox" do
+      @suite.browser.should == 'Firefox'
+    end
   end
   
   it "should get working_directory" do
@@ -12,7 +29,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should find external script_urls" do
-    @suite.should have(12).script_urls
+    @suite.should have(13).script_urls
   end
   
   it "should find external link_urls" do
@@ -20,7 +37,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should generate GET urls for scripts" do
-    @stub.should_receive(:get).exactly(12).times
+    @stub.should_receive(:get).exactly(13).times
     @suite.generate_js_urls
   end
   

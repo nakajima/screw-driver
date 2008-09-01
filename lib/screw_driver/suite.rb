@@ -1,14 +1,15 @@
 require 'hpricot'
+
 module Screw
   module Driver
     class Suite
-      attr_reader :failures, :test_count
+      attr_reader :failures, :test_count, :path
       
-      def initialize(path, context)
-        raise "No suite found: #{path}" unless File.exists?(path)
-        @path, @context = path, context
+      def initialize(context, args)
+        @args, @context = args, context
         @test_count = 0
         @failures = []
+        parse_args
       end
       
       def passed!
@@ -38,25 +39,50 @@ module Screw
       end
       
       def script_urls
-        doc.search('script').map { |script| script['src'] }
+        @script_urls ||= doc.search('script').map { |script| script['src'] }.compact
       end
       
       def link_urls
-        doc.search('link').map { |script| script['href'] }
+        @link_urls ||= doc.search('link').map { |script| script['href'] }.compact
+      end
+      
+      def to_s
+        doc.to_s
+      end
+      
+      def browser
+        @browser || 'Firefox'
+      end
+      
+      def server?
+        @server
       end
       
       private
       
-      def generate(url, content_type)
-        path = working_directory + url
+      def generate(url, content_type, prefix=working_directory)
+        path = prefix + url
         @context.send(:get, url) do
           headers 'Content-Type' => content_type
           File.read(path)
         end
       end
       
+      def parse_args
+        @server = @args.delete('--server') ? true : false
+        
+        if (i = @args.index('--browser'))
+          @browser = @args[i+1]
+          @args.delete('--browser')
+          @args.delete(@browser)
+        end
+          
+        @path = File.join(Dir.pwd, @args.shift)
+        puts @path
+      end
+      
       def doc
-        @doc ||= Hpricot(File.open(@path))
+        Hpricot(File.open(@path))
       end
     end
   end
