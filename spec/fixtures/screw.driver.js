@@ -1,5 +1,5 @@
 (function($) {
-  // $(Screw).bind('before', function() { $.ajaxQueue.post('/before'); });
+  $(Screw).bind('before', function() { $.ajaxQueue.post('/before'); });
   $(Screw).bind('after', function() {
     $.ajaxQueue.post('/after', {
       complete: function() { $.ajaxQueue.post('/exit'); }
