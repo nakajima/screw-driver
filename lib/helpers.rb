@@ -38,8 +38,7 @@ helpers do
     padded do
       $stdout.print "== Spec Server "
       $stdout.flush
-      pid = `ps aux | grep #{File.basename($0)} | grr --column 2`
-      `kill #{pid}`
+      `kill #{$$}`
     end
   end
 end
