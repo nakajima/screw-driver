@@ -26,3 +26,6 @@ REQUIREMENTS
 - sinatra
 - colored
 - hpricot
+
+TODO
+- Figure out why tests don't run properly from rake task.
