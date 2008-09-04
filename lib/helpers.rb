@@ -40,9 +40,8 @@ helpers do
   
   def exit_suite
     padded do
-      $stdout.print "== Spec Server "
-      $stdout.flush
-      `kill #{$$}`
+      puts "== Spec Server Exiting..."
+      SUITE.exit
     end
   end
 end

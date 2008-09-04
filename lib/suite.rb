@@ -56,6 +56,10 @@ module Screw
         @server
       end
       
+      def exit
+        exit! failures.empty? ? 0 : 1
+      end
+      
       private
       
       def generate(url, content_type, prefix=working_directory)

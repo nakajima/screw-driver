@@ -45,4 +45,22 @@ describe Screw::Driver::Suite do
     @stub.should_receive(:get).exactly(1).times
     @suite.generate_css_urls
   end
+  
+  it "should exit with 0 failures" do
+    @suite.should_receive(:exit!).with(0)
+    @suite.exit
+  end
+  
+  it "should exit with 1 for failures" do
+    @suite.should_receive(:exit!).with(1)
+    @suite.failed! :oops
+    @suite.exit
+  end
+  
+  it "should exit with 1 for multiple failures" do
+    @suite.should_receive(:exit!).with(1)
+    @suite.failed! :oops
+    @suite.failed! :again
+    @suite.exit
+  end
 end
