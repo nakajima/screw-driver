@@ -2,6 +2,7 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Screw::Driver::Suite do
   before(:each) do
+    Dir.stub!(:pwd).and_return(SCREW_ROOT) # Simulate running from command line
     @suite = create_suite
   end
   
