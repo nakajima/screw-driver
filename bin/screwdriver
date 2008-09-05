@@ -8,13 +8,16 @@ ARGV.clear
 require 'rubygems'
 require 'colored'
 require 'sinatra'
+require 'browser.rb'
+require 'browsers/firefox.rb'
+require 'browsers/safari.rb'
 require 'suite.rb'
 require 'helpers.rb'
 
 configure do
   Rack::CommonLogger.class_eval { def <<(str) end } # Inhibit logging retardase
   SUITE = Screw::Driver::Suite.new(self, args)
-  start_browser
+  SUITE.browser.start
 end
 
 SUITE.generate_js_urls

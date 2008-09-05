@@ -49,7 +49,7 @@ module Screw
       end
       
       def browser
-        @browser || 'Firefox'
+        @browser
       end
       
       def server?
@@ -57,6 +57,7 @@ module Screw
       end
       
       def exit
+        browser.kill
         exit! failures.empty? ? 0 : 1
       end
       
@@ -74,10 +75,14 @@ module Screw
         @server = @args.delete('--server') ? true : false
         
         if (i = @args.index('--browser'))
-          @browser = @args[i+1]
+          browser = @args[i+1]
           @args.delete('--browser')
           @args.delete(@browser)
+        else
+          browser = 'Firefox'
         end
+        
+        @browser = eval("Screw::Driver::Browser::#{browser}.new")
           
         @path = File.join(Dir.pwd, @args.shift)
       end

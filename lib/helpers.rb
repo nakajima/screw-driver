@@ -1,7 +1,3 @@
-def start_browser
-  Thread.new { sleep 1; system "open -a #{SUITE.browser} 'http://localhost:4567/?body%20%3E%20.describe'" }
-end
-
 helpers do
   def padded(spaces=1)
     spaces.times { puts "" }
