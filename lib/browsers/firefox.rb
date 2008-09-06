@@ -10,10 +10,10 @@ module Screw
         end
         
         def kill
-          print "   killing Firefox... "
+          puts "   killing Firefox... "
           browser_pid = `ps aux | grep -v grep | grep Firefox.app`.scan(/\d+/).first
           `kill -s SIGTERM #{browser_pid}`
-          puts 'done.'
+          puts '   done.'
         end
       end
     end
