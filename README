@@ -38,3 +38,5 @@ REQUIREMENTS
 
 TODO
 - Figure out why tests don't run properly from rake task.
+- Support running without the colored gem
+- Don't kill my Firefox session when complete
