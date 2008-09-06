@@ -3,6 +3,8 @@ require 'hpricot'
 module Screw
   module Driver
     class Suite
+      include Rails
+      
       attr_reader :failures, :test_count, :path
       
       def initialize(context, args)
@@ -28,14 +30,12 @@ module Screw
         File.dirname(@path)
       end
       
-      def generate_js_urls
-        script_urls.each { |url| generate(url, "text/javascript") }
+      def generate_urls
+        generate_js_urls
+        generate_css_urls
+        generate_rails_urls if rails?
       end
-      
-      def generate_css_urls
-        link_urls.each { |url| generate(url, "text/css") }
-      end
-      
+            
       def script_urls
         doc.search('script').map { |script| script['src'] }.compact
       end
@@ -63,6 +63,14 @@ module Screw
       
       private
       
+      def generate_js_urls
+        script_urls.each { |url| generate(url, "text/javascript") }
+      end
+      
+      def generate_css_urls
+        link_urls.each { |url| generate(url, "text/css") }
+      end
+      
       def generate(url, content_type, prefix=working_directory)
         path = prefix + url
         @context.send(:get, url) do
@@ -81,6 +89,8 @@ module Screw
         else
           browser = 'Firefox'
         end
+        
+        @rails = @args.delete('--rails')
         
         @browser = eval("Screw::Driver::Browser::#{browser}.new")
           

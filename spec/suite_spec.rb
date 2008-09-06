@@ -37,14 +37,9 @@ describe Screw::Driver::Suite do
     @suite.should have(1).link_urls
   end
   
-  it "should generate GET urls for scripts" do
-    @stub.should_receive(:get).exactly(14).times
-    @suite.generate_js_urls
-  end
-  
-  it "should generate GET urls for links" do
-    @stub.should_receive(:get).exactly(1).times
-    @suite.generate_css_urls
+  it "should generate GET urls" do
+    @context.should_receive(:get).exactly(15).times
+    @suite.generate_urls
   end
   
   it "should exit with 0 failures" do

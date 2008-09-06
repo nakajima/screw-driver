@@ -11,6 +11,7 @@ require 'sinatra'
 require 'browser.rb'
 require 'browsers/firefox.rb'
 require 'browsers/safari.rb'
+require 'rails.rb'
 require 'suite.rb'
 require 'helpers.rb'
 
@@ -20,8 +21,7 @@ configure do
   SUITE.browser.start
 end
 
-SUITE.generate_js_urls
-SUITE.generate_css_urls
+SUITE.generate_urls
 
 get('/') { SUITE.to_s }
 post('/passed')  { report '.'.green }

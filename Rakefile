@@ -1,3 +1,9 @@
+desc "Run specs"
 task :default do
-  puts `spec #{File.expand_path(File.dirname(__FILE__))}/spec/suite_spec.rb`
+  puts `spec spec/ --colour`
+end
+
+task :run do
+  dir = File.dirname(__FILE__)
+  system "#{dir}/bin/screwdriver #{dir}/spec/fixtures/suite.html"
 end

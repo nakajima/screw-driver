@@ -8,19 +8,28 @@ Still really early. To try it, run this:
 
 You can specify a browser like so:
 
-  ./bin/screwdriver spec/fixtures/suite.html --browser Safari
+  screwdriver spec/fixtures/suite.html --browser Safari
 
 By default, Screw.Driver uses Firefox.
 
 If you don't want the server to automatically quit after
 your suite runs, you can use the "--server" option:
 
-  ./bin/screwdriver spec/fixtures/suite.html --server
-
+  screwdriver spec/fixtures/suite.html --server
+  
 Screw.Driver will generate urls for each of the external
 scripts and CSS links you include in your suite.html file,
 and will serve them from the directory that contains the
 suite.html file.
+
+== Using with Rails ==
+
+If you're using Rails, run screwdriver from the root directory
+of your app, and specify the "--rails" option. This will cause
+the Screw.Driver server to serve the JavaScript files in your
+public/javascripts directory. Example:
+
+  screwdriver spec/fixtures/suite.html --rails
 
 REQUIREMENTS
 - sinatra
