@@ -8,8 +8,8 @@ module Screw
       def rails_urls
         @rails_urls ||= begin
           @public_path = File.join(Dir.pwd, 'public', 'javascripts')
-          Dir.new(public_path).entries.inject([]) do |files, entry|
-            files << File.expand_path(File.join(public_path, entry)) if entry.match(/\.js$/)
+          Dir.new(@public_path).entries.inject([]) do |files, entry|
+            files << File.expand_path(File.join(@public_path, entry)) if entry.match(/\.js$/)
             files
           end
         end
