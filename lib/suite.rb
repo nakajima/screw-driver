@@ -90,10 +90,10 @@ module Screw
           browser = 'Firefox'
         end
         
+        @browser = eval("Screw::Driver::Browser::#{browser}.new")
+        
         @rails = @args.delete('--rails')
         
-        @browser = eval("Screw::Driver::Browser::#{browser}.new")
-          
         @path = File.join(Dir.pwd, @args.shift)
       end
       
