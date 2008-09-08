@@ -6,8 +6,8 @@ args = ARGV.dup
 ARGV.clear
 
 require 'rubygems'
-require 'colored'
 require 'sinatra'
+require 'ext/string.rb'
 require 'browser.rb'
 require 'browsers/firefox.rb'
 require 'browsers/safari.rb'
