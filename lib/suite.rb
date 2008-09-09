@@ -121,7 +121,7 @@ module Screw
           puts opts
           exit!
         else
-          @browser  = eval("Screw::Driver::Browser::#{options.browser}.new")
+          @browser  = eval("Screw::Driver::#{options.browser}.new")
           @rails    = options.rails
           @server   = options.server
           @path     = File.join(Dir.pwd, args.shift)
