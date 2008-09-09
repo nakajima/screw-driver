@@ -30,7 +30,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should find external script_urls" do
-    @suite.should have(13).script_urls
+    @suite.should have(15).script_urls
   end
   
   it "should find external link_urls" do
