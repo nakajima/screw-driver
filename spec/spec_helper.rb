@@ -10,7 +10,7 @@ require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'safari.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'rails.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'suite.rb')
 
-[Screw::Driver::Browser::Safari, Screw::Driver::Browser::Firefox].each do |klass|
+[Screw::Driver::Safari, Screw::Driver::Firefox].each do |klass|
   klass.class_eval { def kill; end }
 end
 
