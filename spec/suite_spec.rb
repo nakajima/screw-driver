@@ -30,7 +30,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should find external script_urls" do
-    @suite.should have(15).script_urls
+    @suite.should have(13).script_urls
   end
   
   it "should find external link_urls" do
@@ -62,12 +62,12 @@ describe Screw::Driver::Suite do
   
   describe "load paths" do
     it "should have 1 load_path by default" do
-      @suite.should have(1).load_paths
+      @suite.should have(2).load_paths
     end
     
     it "should append load paths" do
       suite = create_suite '--load-paths', 'src'
-      suite.should have(2).load_paths
+      suite.should have(3).load_paths
     end
 
     it "should serve files from added load paths directory" do

@@ -48,7 +48,7 @@ module Screw
       end
 
       def to_s
-        doc.to_s
+        doc.to_html
       end
 
       def browser
@@ -73,10 +73,14 @@ module Screw
       def generate_css_urls
         link_urls.each { |url| generate(url, "text/css") }
       end
+      
+      def generate_framework_urls
+        ['/jquery.ajax_queue.js', 'screw.driver.js'].each { |url| generate(url, 'text/javascript') }
+      end
 
       def generate(url, content_type, prefix=working_directory)
-        prefix = load_paths.detect { |path| File.exists?(File.join(Dir.pwd, path, url)) } || '.'
-        path = File.join(Dir.pwd, prefix, url)
+        prefix = load_paths.detect { |path| File.exists?(File.join(path, url)) } || '.'
+        path = File.join(prefix, url)
         @context.send(:get, url) do
           headers 'Content-Type' => content_type
           File.read(path)
@@ -125,13 +129,31 @@ module Screw
           @rails    = options.rails
           @server   = options.server
           @path     = File.join(Dir.pwd, args.shift)
-          @load_paths = [File.dirname(@path)]
-          @load_paths += options.paths if options.paths
+          setup_load_paths(options.paths)
         end
+      end
+      
+      def setup_load_paths(paths=[])
+        @load_paths = paths.map { |path| File.join(Dir.pwd, path) }
+        @load_paths << File.join(File.dirname(__FILE__), '..', 'js')
+        @load_paths << File.dirname(@path)
       end
 
       def doc
-        Hpricot(File.open(@path))
+        @doc ||= begin
+          @doc = Hpricot(File.open(@path))
+          @doc.search('script').each do |script|
+            case script['src']
+            when "/screw-unit/screw.behaviors.js" then append_script(script, :before, 'jquery.ajax_queue.js')
+            when "/screw-unit/screw.events.js"    then append_script(script, :after, 'screw.driver.js')
+            end
+          end
+          @doc
+        end
+      end
+      
+      def append_script(script, pos, name)
+        script.send(pos, %(<script src="/#{name}"> </script>))
       end
     end
   end

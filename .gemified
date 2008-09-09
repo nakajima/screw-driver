@@ -1,0 +1,11 @@
+--- 
+:homepage: http://github.com/nakajima/screw-driver
+:author: Pat Nakajima
+:dependencies: 
+- sinatra
+- hpricot
+:version: 0.0.1
+:name: screw-driver
+:summary: Run your Screw.Unit specs from the command line.
+:email: patnakajima@gmail.com
+:has_rdoc: false
