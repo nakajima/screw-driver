@@ -8,6 +8,7 @@ ARGV.clear
 require 'rubygems'
 require 'sinatra'
 require 'ext/string.rb'
+require 'ext/hpricot.rb'
 require 'browser.rb'
 require 'browsers/firefox.rb'
 require 'browsers/safari.rb'
