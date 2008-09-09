@@ -2,6 +2,12 @@
 
 Another way to run your Screw.Unit tests.
 
+== INSTALL ==
+
+Run "gemify" from the command line, then choose "build gem"
+
+== ABOUT ==
+
 Still really early. To try it, run this:
 
   ./bin/screwdriver spec/fixtures/suite.html
@@ -39,6 +45,7 @@ public/javascripts directory. Example:
 REQUIREMENTS
 - sinatra
 - hpricot
+- gemify (to build)
 
 TODO
 - Don't kill all Firefox tabs when complete
