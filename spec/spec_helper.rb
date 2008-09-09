@@ -4,7 +4,7 @@ FIXTURE_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures'))
 require 'rubygems'
 require 'spec'
 require File.join(File.dirname(__FILE__), '..', 'lib', 'ext', 'hpricot.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'browser.rb')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'browser.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'firefox.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'safari.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'rails.rb')
