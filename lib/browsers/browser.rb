@@ -10,7 +10,7 @@ module Screw
       end
       
       def osascript(name)
-        dir = File.expand_path(File.dirname(__FILE__) + '/browsers/applescripts')
+        dir = File.expand_path(File.dirname(__FILE__) + '/applescripts')
         system("osascript #{dir}/#{name}") rescue false
       end
     end
