@@ -74,10 +74,6 @@ module Screw
         link_urls.each { |url| generate(url, "text/css") }
       end
       
-      def generate_framework_urls
-        ['/jquery.ajax_queue.js', 'screw.driver.js'].each { |url| generate(url, 'text/javascript') }
-      end
-
       def generate(url, content_type, prefix=working_directory)
         prefix = load_paths.detect { |path| File.exists?(File.join(path, url)) } || '.'
         path = File.join(prefix, url)
