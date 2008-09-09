@@ -17,11 +17,11 @@ describe Screw::Driver::Suite do
     end
     
     it "should get browser" do
-      create_suite('--browser', 'Safari').browser.kind_of?(Screw::Driver::Browser::Safari).should be_true
+      create_suite('--browser', 'Safari').browser.kind_of?(Screw::Driver::Safari).should be_true
     end
     
     it "should default browser to Firefox" do
-      @suite.browser.kind_of?(Screw::Driver::Browser::Firefox).should be_true
+      @suite.browser.kind_of?(Screw::Driver::Firefox).should be_true
     end
   end
   
