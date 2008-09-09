@@ -140,16 +140,16 @@ module Screw
       end
 
       def doc
-        @doc ||= begin
-          @doc = Hpricot(File.open(@path))
-          @doc.search('script').each do |script|
-            case script['src']
-            when "/screw-unit/screw.behaviors.js" then append_script(script, :before, 'jquery.ajax_queue.js')
-            when "/screw-unit/screw.events.js"    then append_script(script, :after, 'screw.driver.js')
-            end
+        @doc ||= extend_doc(Hpricot(File.open(@path)))
+      end
+      
+      def extend_doc(hpricot_doc)
+        hpricot_doc.search('script').each do |script|
+          case script['src']
+          when "/screw-unit/screw.behaviors.js" then append_script(script, :before, 'jquery.ajax_queue.js')
+          when "/screw-unit/screw.events.js"    then append_script(script, :after, 'screw.driver.js')
           end
-          @doc
-        end
+        end and hpricot_doc
       end
       
       def append_script(script, pos, name)
