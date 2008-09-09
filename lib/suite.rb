@@ -129,7 +129,7 @@ module Screw
           @rails    = options.rails
           @server   = options.server
           @path     = File.join(Dir.pwd, args.shift)
-          setup_load_paths(options.paths)
+          setup_load_paths options.paths
         end
       end
       
@@ -140,10 +140,11 @@ module Screw
       end
 
       def doc
-        @doc ||= extend_doc(Hpricot(File.open(@path)))
+        @doc ||= extended_doc(File.open(@path))
       end
       
-      def extend_doc(hpricot_doc)
+      def extended_doc(file)
+        hpricot_doc = Hpricot(file)
         hpricot_doc.search('script').each do |script|
           case script['src']
           when "/screw-unit/screw.behaviors.js" then append_script(script, :before, 'jquery.ajax_queue.js')
