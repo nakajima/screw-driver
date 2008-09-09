@@ -7,7 +7,7 @@ module Screw
     class Suite
       include Rails
 
-      attr_reader :failures, :test_count, :path
+      attr_reader :failures, :test_count, :path, :load_paths, :context
 
       def initialize(context, args)
         @context = context
@@ -28,7 +28,7 @@ module Screw
         @test_count = 0
         @failures = []
       end
-
+      
       def working_directory
         File.dirname(@path)
       end
@@ -75,7 +75,8 @@ module Screw
       end
 
       def generate(url, content_type, prefix=working_directory)
-        path = prefix + url
+        prefix = load_paths.detect { |path| File.exists?(File.join(Dir.pwd, path, url)) } || '.'
+        path = File.join(Dir.pwd, prefix, url)
         @context.send(:get, url) do
           headers 'Content-Type' => content_type
           File.read(path)
@@ -87,6 +88,7 @@ module Screw
         options.browser = "Firefox"
         options.rails   = false
         options.server  = false
+        options.paths   = []
 
         opts = OptionParser.new do |opts|
           opts.banner = "Usage: screwdriver [options] suite"
@@ -94,11 +96,15 @@ module Screw
           opts.on("-b", "--browser BROWSER", "Specify the browser to use (default: Firefox)") do |browser|
             options.browser = browser
           end
+          
+          opts.on("-p", "--load-paths src,dist,etc", Array, "Adds additional load paths from which files can be served.") do |paths|
+            options.paths = paths
+          end
 
           opts.on("--rails", "Enable Rails integration (serves files from the RAILS_ROOT/public/javascripts directory)") do
             options.rails = true
           end
-
+          
           opts.on("-s", "--server", "Keeps the server running after completion") do
             options.server = true
           end
@@ -119,6 +125,8 @@ module Screw
           @rails    = options.rails
           @server   = options.server
           @path     = File.join(Dir.pwd, args.shift)
+          @load_paths = [File.dirname(@path)]
+          @load_paths += options.paths if options.paths
         end
       end
 

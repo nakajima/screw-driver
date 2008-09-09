@@ -30,7 +30,7 @@ describe Screw::Driver::Suite do
   end
   
   it "should find external script_urls" do
-    @suite.should have(14).script_urls
+    @suite.should have(15).script_urls
   end
   
   it "should find external link_urls" do
@@ -38,8 +38,8 @@ describe Screw::Driver::Suite do
   end
   
   it "should generate GET urls" do
-    @context.should_receive(:get).exactly(15).times
     @suite.generate_urls
+    @context.routes.should have(16).keys
   end
   
   it "should exit with 0 failures" do
@@ -59,4 +59,22 @@ describe Screw::Driver::Suite do
     @suite.failed! :again
     @suite.exit
   end
+  
+  describe "load paths" do
+    it "should have 1 load_path by default" do
+      @suite.should have(1).load_paths
+    end
+    
+    it "should append load paths" do
+      suite = create_suite '--load-paths', 'src'
+      suite.should have(2).load_paths
+    end
+
+    it "should serve files from added load paths directory" do
+      suite = create_suite '--load-paths', 'spec/fixtures/src'
+      suite.generate_urls
+      suite.context.routes['/great.js'].call.should == 'var Great = { terrific: true }'
+    end
+  end
+  
 end

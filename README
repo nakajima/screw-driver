@@ -22,6 +22,11 @@ scripts and CSS links you include in your suite.html file,
 and will serve them from the directory that contains the
 suite.html file.
 
+To specify additional load paths for your JavaScripts, you can
+use the "--load-paths" option:
+
+  screwdriver spec/fixtures/suite.html --load-paths src/
+
 == Using with Rails ==
 
 If you're using Rails, run screwdriver from the root directory
@@ -37,3 +42,4 @@ REQUIREMENTS
 
 TODO
 - Don't kill all Firefox tabs when complete
+- Use #load_paths for Rails functionality

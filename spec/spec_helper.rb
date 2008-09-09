@@ -13,11 +13,23 @@ require File.join(File.dirname(__FILE__), '..', 'lib', 'suite.rb')
   klass.class_eval { def kill; end }
 end
 
+module FakeContext
+  def routes
+    @routes ||= { }
+  end
+  
+  def get(url, &block)
+    routes[url] = proc(&block)
+  end
+end
+
 def create_suite(*addl_opts)
   @context = stub('context')
-  @context.stub!(:get)
+  @context.extend(FakeContext)
   yield @context if block_given?
   @args = ['spec/fixtures/suite.html']
   addl_opts.each { |opt| @args << opt }
-  Screw::Driver::Suite.new(@context, @args)
+  suite = Screw::Driver::Suite.new(@context, @args)
+  suite.stub!(:headers)
+  suite
 end
