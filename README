@@ -48,5 +48,7 @@ REQUIREMENTS
 - gemify (to build)
 
 TODO
+- Inject base tag into DOM at Hpricot parsing stage
+- Convert script src attributes to absolute paths at Hpricot parsing stage
 - Don't kill all Firefox tabs when complete
 - Use #load_paths for Rails functionality
