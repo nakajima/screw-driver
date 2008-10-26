@@ -5,10 +5,6 @@ describe Screw::Driver::Rails do
     Dir.stub!(:pwd).and_return(FIXTURE_PATH)
   end
   
-  it "should break" do
-    true.should be_false
-  end
-  
   it "can be railsy" do
     suite = create_suite '--rails'
     suite.should be_rails
