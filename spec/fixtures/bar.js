@@ -1,3 +1,1 @@
-var bar = {
-  foo: true
-}
+var bar = { foo: true }

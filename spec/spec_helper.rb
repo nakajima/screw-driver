@@ -1,14 +1,17 @@
-SCREW_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-FIXTURE_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures'))
+SCREW_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')) unless defined?(SCREW_ROOT)
+FIXTURE_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures')) unless defined?(FIXTURE_PATH)
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib', 'browsers')
 
 require 'rubygems'
 require 'spec'
-require File.join(File.dirname(__FILE__), '..', 'lib', 'ext', 'hpricot.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'browser.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'firefox.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'browsers', 'safari.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'rails.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'suite.rb')
+require 'ext/hpricot'
+require 'browser'
+require 'firefox'
+require 'safari'
+require 'rails'
+require 'suite'
 
 [Screw::Driver::Browser::Safari, Screw::Driver::Browser::Firefox].each do |klass|
   klass.class_eval { def kill; end }

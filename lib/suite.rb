@@ -63,15 +63,32 @@ module Screw
         browser.kill
         exit! failures.empty? ? 0 : 1
       end
+      
+      def write_dot!(str)
+        $stdout.print(str)
+        $stdout.flush
+      end
 
     private
 
       def generate_js_urls
-        script_urls.each { |url| generate(url, "text/javascript") }
+        script_urls.each do |url|
+          absolute_url = absolutize_url(url)
+          generate(absolute_url, "text/javascript")
+        end
       end
 
       def generate_css_urls
-        link_urls.each { |url| generate(url, "text/css") }
+        link_urls.each do |url|
+          absolute_url = absolutize_url(url)
+          generate(absolute_url, "text/css")
+        end
+      end
+      
+      # i know. this is hideous.
+      def absolutize_url(url)
+        full_path = File.expand_path(File.join(path, url))
+        full_path.gsub(File.expand_path(path), '')
       end
       
       def generate(url, content_type, prefix=working_directory)
@@ -141,6 +158,7 @@ module Screw
       
       def extended_doc(file)
         hpricot_doc = Hpricot(file)
+        hpricot_doc.search('script').prepend(%(<base href="http://localhost:4567">))
         hpricot_doc.search('script').each do |node|
           case File.basename(node['src'])
           when "screw.behaviors.js" then node.insert_js(:before, 'jquery.ajax_queue.js')

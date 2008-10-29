@@ -8,8 +8,7 @@ helpers do
   
   def report(str, params=nil)
     params ? SUITE.failed!(params) : SUITE.passed!
-    $stdout.print(str)
-    $stdout.flush
+    SUITE.write_dot!(str)
     sleep 0.1
     :ok
   end

@@ -10,7 +10,7 @@ module Screw
         def kill
           puts "   killing Safari... "
           browser_pid = `ps aux | grep -v grep | grep Safari.app`.scan(/\d+/).first
-          `kill -s SIGTERM #{browser_pid}`
+          system("kill -s SIGTERM #{browser_pid}")
           puts '   done.'
         end
       end
