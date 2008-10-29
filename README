@@ -1,12 +1,16 @@
-= Screw.Driver =
+h1. Screw.Driver
 
 Another way to run your Screw.Unit tests.
 
-== INSTALL ==
+h3. INSTALL
 
-Run "gemify" from the command line, then choose "build gem"
+To build the gem, run this:
 
-== ABOUT ==
+  gemify -I
+
+"View the CI build":http://ci.patnakajima.com/screw-driver
+
+h3. ABOUT
 
 Still really early. To try it, run this:
 
@@ -33,7 +37,7 @@ use the "--load-paths" option:
 
   screwdriver spec/fixtures/suite.html --load-paths src/
 
-== Using with Rails ==
+h3. Using with Rails
 
 If you're using Rails, run screwdriver from the root directory
 of your app, and specify the "--rails" option. This will cause
