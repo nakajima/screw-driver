@@ -99,11 +99,11 @@ module Screw
         # file_path = File.expand_path(File.join(working_directory, url))
         # full_path = File.expand_path(File.join(path, url))
         # full_path.gsub(File.expand_path(path), '')
-        '/' + url.split('./').last
+        ('/' + url.split('./').last).gsub(%r(/+), '/')
       end
       
-      def generate(url, content_type)
-        prefix = load_paths.detect { |load_path| File.exists?(File.join(load_path, url)) } || working_directory
+      def generate(url, content_type, default_path=working_directory)
+        prefix = load_paths.detect { |load_path| File.exists?(File.join(load_path, url)) } || default_path
         path = File.join(prefix, url)
         @context.send(:get, absolutize_url(url)) do
           headers 'Content-Type' => content_type
