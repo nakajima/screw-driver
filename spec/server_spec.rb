@@ -17,7 +17,7 @@ describe Screw::Driver do
   
   it "inserts the base tag" do
     get_it '/'
-    response.body.should include("<base")
+    Hpricot(response.body).at('base').should_not be_nil
   end
   
   it "gets a js file" do
@@ -26,8 +26,13 @@ describe Screw::Driver do
   end
   
   it "gets a nested js file" do
-    get_it '/great.js'
+    get_it '/src/great.js'
     response.body.should == "var Great = { terrific: true }"
+  end
+  
+  it "gets a fixture" do
+    get_it '/fixtures/tags.html'
+    response.body.should == '<div class="tags"></div>'
   end
   
   describe "test result handlers" do

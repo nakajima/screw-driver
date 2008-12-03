@@ -39,7 +39,7 @@ describe Screw::Driver::Suite do
   
   it "should generate GET urls" do
     @suite.generate_urls
-    @context.routes.should have(16).keys
+    @context.routes.should have(17).keys
   end
   
   it "should exit with 0 failures" do
@@ -73,8 +73,15 @@ describe Screw::Driver::Suite do
     it "should serve files from added load paths directory" do
       suite = create_suite '--load-paths', 'spec/fixtures/src'
       suite.generate_urls
-      suite.context.routes['/great.js'].call.should == 'var Great = { terrific: true }'
+      suite.context.routes['/src/great.js'].call.should == 'var Great = { terrific: true }'
     end
   end
   
+  describe "fixtures" do
+    it "should serve fixtures if they're there" do
+      suite = create_suite
+      suite.generate_urls
+      suite.context.routes['/fixtures/tags.html'].call.should == '<div class="tags"></div>'
+    end
+  end
 end

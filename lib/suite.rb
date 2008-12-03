@@ -37,6 +37,7 @@ module Screw
         generate_js_urls
         generate_css_urls
         generate_rails_urls if rails?
+        generate_fixture_urls if fixtures?
       end
 
       def script_urls
@@ -58,6 +59,10 @@ module Screw
       def server?
         @server
       end
+      
+      def fixtures?
+        File.exists?(File.join(working_directory, 'fixtures'))
+      end
 
       def exit
         browser.kill
@@ -70,31 +75,37 @@ module Screw
       end
 
     private
+    
+      def generate_fixture_urls
+        Dir[File.join(working_directory, "fixtures", "*.html")].each do |fixture|
+          generate(File.join("fixtures", File.basename(fixture)), "text/html")
+        end
+      end
 
       def generate_js_urls
         script_urls.each do |url|
-          absolute_url = absolutize_url(url)
-          generate(absolute_url, "text/javascript")
+          generate(url, "text/javascript")
         end
       end
 
       def generate_css_urls
         link_urls.each do |url|
-          absolute_url = absolutize_url(url)
-          generate(absolute_url, "text/css")
+          generate(url, "text/css")
         end
       end
       
       # i know. this is hideous.
       def absolutize_url(url)
-        full_path = File.expand_path(File.join(path, url))
-        full_path.gsub(File.expand_path(path), '')
+        # file_path = File.expand_path(File.join(working_directory, url))
+        # full_path = File.expand_path(File.join(path, url))
+        # full_path.gsub(File.expand_path(path), '')
+        '/' + url.split('./').last
       end
       
-      def generate(url, content_type, prefix=working_directory)
-        prefix = load_paths.detect { |path| File.exists?(File.join(path, url)) } || '.'
+      def generate(url, content_type)
+        prefix = load_paths.detect { |load_path| File.exists?(File.join(load_path, url)) } || working_directory
         path = File.join(prefix, url)
-        @context.send(:get, url) do
+        @context.send(:get, absolutize_url(url)) do
           headers 'Content-Type' => content_type
           File.read(path)
         end
@@ -158,7 +169,7 @@ module Screw
       
       def extended_doc(file)
         hpricot_doc = Hpricot(file)
-        hpricot_doc.search('script').prepend(%(<base href="http://localhost:4567">))
+        hpricot_doc.search('script').last.after(%(<base href="http://localhost:4567">))
         hpricot_doc.search('script').each do |node|
           case File.basename(node['src'])
           when "screw.behaviors.js" then node.insert_js(:before, 'jquery.ajax_queue.js')
