@@ -1,4 +1,4 @@
-README
+README.textile
 Rakefile
 bin/screwdriver
 lib/browser.rb
@@ -30,7 +30,7 @@ spec/fixtures/screw-unit/screw.matchers.js
 spec/fixtures/screw-unit/screw.server.js
 spec/fixtures/screw.driver.js
 spec/fixtures/spec_helper.js
-spec/fixtures/src/great.js
+spec/src/great.js
 spec/fixtures/suite.html
 spec/rails_spec.rb
 spec/spec_helper.rb
