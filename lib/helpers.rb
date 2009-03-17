@@ -1,4 +1,4 @@
-helpers do
+module Helpers
   def padded(spaces=1)
     spaces.times { puts "" }
     yield
@@ -7,14 +7,14 @@ helpers do
   end
   
   def report(str, params=nil)
-    params ? SUITE.failed!(params) : SUITE.passed!
-    SUITE.write_dot!(str)
+    params ? Runner.suite.failed!(params) : Runner.suite.passed!
+    Runner.suite.write_dot!(str)
     sleep 0.1
     :ok
   end
   
   def before_suite
-    SUITE.reset!
+    Runner.suite.reset!
     padded do
       puts "Staring to run test suite..."
     end
@@ -22,21 +22,21 @@ helpers do
   
   def after_suite
     padded do
-      SUITE.failures.each do |failure|
+      Runner.suite.failures.each do |failure|
         padded do
           puts "Failure:".red
           puts "- #{failure[:name]}: #{failure[:reason]}"
         end
       end
-      print "Finished. #{SUITE.test_count} tests. "
-      print "#{SUITE.failures.length} failures." unless SUITE.failures.empty?
+      print "Finished. #{Runner.suite.test_count} tests. "
+      print "#{Runner.suite.failures.length} failures." unless Runner.suite.failures.empty?
     end
   end
   
   def exit_suite
     padded do
       puts "== Spec Server Exiting..."
-      SUITE.exit
+      Runner.suite.exit
     end
   end
 end
